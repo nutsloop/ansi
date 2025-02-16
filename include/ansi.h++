@@ -16,6 +16,13 @@ public:
   }
   ~ansi() = default;
 
+  // MARK (ansi) black
+  [[nodiscard]] ansi black() const { return ansi("\033[30m" + text_ + "\033[0m"); }
+  [[nodiscard]] ansi bright_black() const { return ansi("\033[90m" + text_ + "\033[0m"); }
+  [[nodiscard]] ansi background_black() const { return ansi("\033[40m" + text_ + "\033[0m"); }
+  [[nodiscard]] ansi bright_background_black() const {
+    return ansi("\033[100m" + text_ + "\033[0m");
+  }
   // MARK (ansi) red
   [[nodiscard]] ansi red() const { return ansi("\033[31m" + text_ + "\033[0m"); }
   [[nodiscard]] ansi bright_red() const { return ansi("\033[91m" + text_ + "\033[0m"); }
