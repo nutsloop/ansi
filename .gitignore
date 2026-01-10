@@ -1,0 +1,11 @@
+.DS_Store
+/.cache/
+/.claude/
+/.idea/
+/.venv/
+/.vscode/
+/.zed/
+/build/
+/docs/build/
+/venv/
+__pycache__/
