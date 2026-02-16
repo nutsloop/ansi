@@ -1,7 +1,7 @@
 project(
     'ansi',
     'cpp',
-    version : '1.0.0',
+    version : '1.0.1',
     license : 'Apache-2.0',
     license_files : 'LICENSE',
     default_options : [
@@ -9,14 +9,6 @@ project(
         'warning_level=3',
         'default_library=both',
     ],
-)
-
-# libc++: replace deprecated _LIBCPP_ENABLE_ASSERTIONS with the new hardening mode
-mode = (get_option('buildtype') == 'debug' or get_option('buildtype') == 'debugoptimized') ? '_LIBCPP_HARDENING_MODE_DEBUG' : '_LIBCPP_HARDENING_MODE_NONE'
-add_project_arguments(
-    '-U_LIBCPP_ENABLE_ASSERTIONS',
-    '-D_LIBCPP_HARDENING_MODE=' + mode,
-    language : 'cpp',
 )
 
 inc = include_directories('include')
