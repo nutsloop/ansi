@@ -1,0 +1,13 @@
+# OS
+.DS_Store
+
+# Editors and IDEs
+/.idea/
+/.vscode/
+/.zed/
+
+# Project tools and caches
+/.cache/
+
+# Build outputs
+/build/
