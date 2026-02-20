@@ -1,0 +1,167 @@
+# =========================================================================
+#   Ceedling - Test-Centered Build System for C/C++
+#   ThrowTheSwitch.org
+# =========================================================================
+
+---
+:project:
+  :which_ceedling: gem
+  :ceedling_version: 1.0.1
+  :use_mocks: FALSE
+  :use_test_preprocessor: :none
+  :use_deep_preprocessor: :none
+  :use_backtrace: :simple
+  :build_root: .cache/ceedling
+  :test_file_prefix: test_
+  :default_tasks:
+    - test:all
+  :test_threads: 4
+  :compile_threads: 4
+  :release_build: FALSE
+
+:test_build:
+  :use_assembly: FALSE
+
+:plugins:
+  :load_paths: []
+  :enabled:
+    - report_tests_pretty_stdout
+    - gcov
+
+:extension:
+  :header: .h++
+  :source: .c++
+  :executable: .out
+
+:paths:
+  :test:
+    - +:test/ceedling/**
+    - -:test/support
+  :source:
+    - src
+    - src/ansi
+    - src/ansi/color
+  :include:
+    - include/**
+  :support:
+    - test/support
+  :libraries: []
+
+:files:
+  :test: []
+  :source:
+    - +:src/ansi.c++
+    - +:src/terminal.c++
+    - +:src/ansi/stylish.c++
+    - +:src/ansi/str.c++
+    - +:src/ansi/color/black.c++
+    - +:src/ansi/color/blue.c++
+    - +:src/ansi/color/cyan.c++
+    - +:src/ansi/color/green.c++
+    - +:src/ansi/color/magenta.c++
+    - +:src/ansi/color/red.c++
+    - +:src/ansi/color/white.c++
+    - +:src/ansi/color/yellow.c++
+    - +:src/ansi/color/color256.c++
+    - +:src/ansi/color/rgb.c++
+    - +:src/ansi/color/hex.c++
+
+:defines:
+  :test:
+    - TEST
+  :release: []
+  :use_test_definition: FALSE
+
+:unity:
+  :defines:
+    - UNITY_EXCLUDE_FLOAT
+
+:libraries:
+  :placement: :end
+  :flag: "-l${1}"
+  :path_flag: "-L ${1}"
+  :system: []
+  :test: []
+  :release: []
+
+:tools:
+  :test_compiler:
+    :executable: g++
+    :arguments:
+      - -g
+      - -fprofile-arcs
+      - -ftest-coverage
+      - -I"${5}"
+      - -D"${6}"
+      - -c "${1}"
+      - -o "${2}"
+  :test_linker:
+    :executable: g++
+    :arguments:
+      - -fprofile-arcs
+      - -ftest-coverage
+      - ${1}
+      - -o ${2}
+      - ${4}
+  :gcov_compiler:
+    :executable: g++
+    :arguments:
+      - -g
+      - -fprofile-arcs
+      - -ftest-coverage
+      - -I"${5}"
+      - -D"${6}"
+      - -c "${1}"
+      - -o "${2}"
+  :gcov_linker:
+    :executable: g++
+    :arguments:
+      - -fprofile-arcs
+      - -ftest-coverage
+      - ${1}
+      - -o ${2}
+      - ${4}
+
+:flags:
+  :test:
+    :compile:
+      '*':
+        - -std=c++23
+        - -Wall
+        - -Wextra
+        - -Wno-deprecated
+        - -pthread
+    :link:
+      '*':
+        - -pthread
+  :gcov:
+    :compile:
+      - -std=c++23
+      - -Wall
+      - -Wextra
+      - -Wno-deprecated
+      - -pthread
+    :link:
+      - -pthread
+
+:gcov:
+  :summaries: TRUE
+  :report_task: FALSE
+  :utilities:
+    - gcovr
+  :reports:
+    - HtmlDetailed
+    - Text
+  :gcovr:
+    :report_root: "."
+    :html_title: "nutsloop/ansi -- Code Coverage"
+    :html_medium_threshold: 75
+    :html_high_threshold: 90
+    :print_summary: TRUE
+    :filter:
+      - "include/"
+      - "src/"
+    :exclude:
+      - "test/"
+      - "\\.cache/"
+      - "vendor/"
